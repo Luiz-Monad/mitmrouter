@@ -1,0 +1,5 @@
+[Match]
+MACAddress=00:0C:29:CE:13:BB
+[Link]
+Name=eth_wan
+
