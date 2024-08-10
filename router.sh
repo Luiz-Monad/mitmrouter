@@ -61,6 +61,9 @@ if [ $1 = "up" ]; then
     iptables -A FORWARD -i $BR_IFACE -o $WAN_IFACE -j ACCEPT
     # optional mitm rules
     #iptables -t nat -A PREROUTING -i $BR_IFACE -p tcp -d 1.2.3.4 --dport 443 -j REDIRECT --to-ports 8081
+    # optional nat forward rules
+    iptables -t nat -A PREROUTING -i $WAN_IFACE -p tcp --dport 12789 -j DNAT --to-destination 192.168.200.101:5910
+    iptables -t nat -A PREROUTING -i $WAN_IFACE -p tcp --dport 22222 -j DNAT --to-destination $LAN_IP:22
 
     echo "== setting static IP on bridge interface"
     ifconfig $BR_IFACE inet $LAN_IP netmask $LAN_SUBNET
